@@ -21,9 +21,13 @@ const bull = (
 
 export default function SelectedCourses(props) {
 
-  const { set , courses, change} = props;
+  const [num, setNum] = React.useState(1)
 
-  const handleClick = (set, courses) => {
+  const { set , courses, change , setCourses, userId} = props;
+
+  const courses1 = ['a','b','c']
+
+  const handleClick = () => {
 
   }
 
@@ -42,16 +46,16 @@ export default function SelectedCourses(props) {
         {Object.keys(courses).map((x)=>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
             <IconButton aria-label="delete" size="small">
-              <DeleteIcon fontSize="inherit" onClick = {()=>change(x)}/>
+              <DeleteIcon fontSize="inherit" onClick = {()=> change(x, courses, setCourses)}/>
             </IconButton>
               {courses[x]}
         </Typography>
         )}
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" size="small"/>
+        <TextField id="outlined-basic" label="Outlined" variant="outlined" size="small">{num}</TextField>
         </Card>
       </CardContent>
       <CardActions disableSpacing sx={{ mt: "auto" }}>
-        <Button fullWidth variant='contained' color='success' onClick={()=> handleClick(set, courses)}>Auto_Advice set - {set}</Button>
+        <Button fullWidth variant='contained' color='success' onClick={handleClick}>Auto_Advice set - {set}</Button>
       </CardActions>
     </Card>
   );

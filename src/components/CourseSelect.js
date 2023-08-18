@@ -10,25 +10,15 @@ import SelectedCourses from './SelectedCourse';
 export default function CourseSelect(props){
     const { userId } = props;
 
-    const [c1, setC1] = React.useState([]);
-    const [c2, setC2] = React.useState([]);
-    const [c3, setC3] = React.useState([]);
+    const [c1, setC1] = React.useState(['a','b','c']);
+    const [c2, setC2] = React.useState(['a','b']);
+    const [c3, setC3] = React.useState(['b','c']);
 
-    function change1(i){
-        let arr1 = [...c1];
+    function change(i, c, setC){
+        let arr1 = [...c];
         arr1.splice(i,1);
-        setC1(arr1);
+        setC(arr1);
       }
-    function change2(i){
-    let arr1 = [...c2];
-    arr1.splice(i,1);
-    setC2(arr1);
-    }
-    function change3(i){
-    let arr1 = [...c3];
-    arr1.splice(i,1);
-    setC3(arr1);
-    }
 
     return (<>
         <Box sx={{ flexGrow: 1 }}>
@@ -46,13 +36,13 @@ export default function CourseSelect(props){
       <Grid item xs={4}>
         {/* <DropDownList s = {s} handleChange = {handleChange_dropdown} /> */}
         <Grid item xs={12}>
-            <SelectedCourses set = {1} courses = {c1} change = {change1}/>
+            <SelectedCourses set = {1} courses = {c1} change = {change} setCourses= {setC1} userId = {userId}/>
         </Grid>
         <Grid item xs={12}>
-            <SelectedCourses set = {2} courses = {c1} change = {change2}/>
+            <SelectedCourses set = {2} courses = {c2} change = {change} setCourses = {setC2} userId = {userId}/>
         </Grid>
         <Grid item xs={12}>
-            <SelectedCourses set = {3} courses = {c1} change = {change3} />
+            <SelectedCourses set = {3} courses = {c3} change = {change} setCourses = {setC3} userId = {userId}/>
         </Grid>
         
       </Grid>
