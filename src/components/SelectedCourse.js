@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CardHeader, TextField } from '@mui/material';
+import { Message } from '@mui/icons-material';
 
 
 const bull = (
@@ -25,11 +26,20 @@ export default function SelectedCourses(props) {
 
   const { set , courses, change , setCourses, userId} = props;
 
-  const courses1 = ['a','b','c']
 
-  const handleClick = () => {
+  const handleClick = (set, num , userId, courses) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ "courses": courses, "num" : num })
+    };
+    console.log(num,courses)
+    fetch(`http://localhost:4000/auto_advise/${userId}/${set}`, requestOptions).then(alert(num,courses));
 
   }
+
+  React.useEffect(() => {
+  }, [courses]);
 
   return (
     <Card sx={{ 
@@ -51,11 +61,11 @@ export default function SelectedCourses(props) {
               {courses[x]}
         </Typography>
         )}
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" size="small">{num}</TextField>
+        <TextField id="outlined-basic" label="Outlined" variant="outlined" size="small" onChange={(event) => {setNum(event.target.value)}}>{num}</TextField>
         </Card>
       </CardContent>
       <CardActions disableSpacing sx={{ mt: "auto" }}>
-        <Button fullWidth variant='contained' color='success' onClick={handleClick}>Auto_Advice set - {set}</Button>
+        <Button fullWidth variant='contained' color='success' onClick={() => handleClick(set,num,userId,courses)}>Auto_Advice set - {set}</Button>
       </CardActions>
     </Card>
   );

@@ -6,19 +6,35 @@ import CourseDetail from './CourseDetail';
 import ExamRoutine from './ExamRoutine';
 import DropDownList from './DropDownList.js'
 import SelectedCourses from './SelectedCourse';
+import BasicTable from './Table'
 
 export default function CourseSelect(props){
     const { userId } = props;
 
-    const [c1, setC1] = React.useState(['a','b','c']);
-    const [c2, setC2] = React.useState(['a','b']);
-    const [c3, setC3] = React.useState(['b','c']);
+    let a = []
+    let c = []
+    const [b, setB] = React.useState([])
+
+    const [c1, setC1] = React.useState([]);
+    const [c2, setC2] = React.useState([]);
+    const [c3, setC3] = React.useState([]);
 
     function change(i, c, setC){
         let arr1 = [...c];
         arr1.splice(i,1);
         setC(arr1);
       }
+
+      const fetchData = async () =>{
+        a = await fetch(`http://localhost:4000/courses`)
+        c = await a.json()
+        setB(c)
+      }
+
+      React.useEffect(() => {
+        fetchData()
+      }, []);
+
 
     return (<>
         <Box sx={{ flexGrow: 1 }}>
@@ -27,7 +43,7 @@ export default function CourseSelect(props){
 
         <Grid container>
           <Grid item xs={12}>
-            {/* <RoutineTable r = {r}/> */} a
+            <BasicTable b = {b} c1 = {c1} setC1 = {setC1} c2 = {c2} setC2 = {setC2} c3 = {c3} setC3 = {setC3}/>
           </Grid>
         </Grid>
 

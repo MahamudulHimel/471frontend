@@ -18,10 +18,28 @@ import AutoAdvising from './AutoAdvising'
 import Time_Set from "./Time_Set"
 import SelectedCourses from './SelectedCourse';
 import CourseSelect from './CourseSelect';
+import basestyle from "./Base.module.css";
 
 const drawerWidth = 240;
 
-export default function SidebarPage() {
+export default function SidebarPage({ setUserState, user }) {
+  
+  function render_page(button){
+    if (button == "Home"){
+      console.log(user.id)
+      return(<HomePage userId = {user.id} />)
+    }else if (button == "Time_Set"){
+      return(<Time_Set userId = {user.id} />)
+    }else{
+      return(<CourseSelect userId = {user.id}/>)
+    }
+  }
+  const [button, setButton] = React.useState("Home")
+
+  React.useEffect(()=>{
+
+  },[button])
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -43,26 +61,29 @@ export default function SidebarPage() {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {['Home', 'Time_Set', 'Course_Selection'].map((text, index) => (
+            {['Home', 'Time_Set', 'Course_Selection'].map((text) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton href = {`/${text}`} >
+                <ListItemButton onClick={() => {setButton(text);}} >
                   <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>
               </ListItem>
             ))}
+            <ListItem>
+            <ListItemButton href = {`/login`}
+              className={basestyle.button_common}
+              onClick={() => setUserState({})}
+            >
+              Logout
+            </ListItemButton>
+            </ListItem>
           </List>
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        <Routes>
-          <Route path="/Home" element = {<HomePage userId = "1" />}/>
-          <Route path="/Time_Set" element = {<Time_Set userId = "1" />} />
-          <Route path="/Course_Selection" element = {<CourseSelect/>}/>
-        </Routes>
+        {render_page(button)}
       </Box>
     </Box>
   );
